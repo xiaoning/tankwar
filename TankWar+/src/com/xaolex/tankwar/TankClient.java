@@ -8,8 +8,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 public class TankClient extends Frame {
@@ -26,6 +28,8 @@ public class TankClient extends Frame {
 	private Wall wall1 = new Wall(80, 150, 20, 250);
 	private Wall wall2 = new Wall(200, 120, 300, 30);
 	private Blood blood = new Blood();
+	private int initCount;
+	private int reCount;
 	
 	public List<Tank> enemys = new ArrayList<Tank>();
 	public List<Explode> explodes = new ArrayList<Explode>();
@@ -63,7 +67,7 @@ public class TankClient extends Frame {
 		}
 		
 		if(enemys.size() <= 0) {
-			for(int i = 1; i <= 5; i++) {
+			for(int i = 1; i <= reCount; i++) {
 				Tank e = new Tank(50 * (i + 1), 70, true, this); 
 				enemys.add(e);
 			}
@@ -87,6 +91,10 @@ public class TankClient extends Frame {
 	}
 
 	public void launchFrame() {
+		
+		initCount = Integer.parseInt(PropertyMgr.getProperty("initTankCount"));
+		reCount = Integer.parseInt(PropertyMgr.getProperty("reProduceTankCount"));
+		
 		// 设置窗口位置
 		this.setLocation(300, 50);
 		// 设置窗口大小
@@ -113,7 +121,7 @@ public class TankClient extends Frame {
 		// 设置可见
 		setVisible(true);
 		
-		for(int i = 1; i <= 10; i++) {
+		for(int i = 1; i <= initCount; i++) {
 			Tank e = new Tank(50 * (i + 1), 70, true, this); 
 			enemys.add(e);
 		}
